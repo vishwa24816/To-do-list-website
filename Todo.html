@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-clipboard-check"></i> My Smart Tasks</h1>
+            <div class="input-section">
+                <input type="text" id="taskInput" placeholder="Add a new task..." aria-label="Add new task">
+                <button id="addTaskBtn" aria-label="Add Task"><i class="fas fa-plus"></i> Add Task</button>
+            </div>
+        </header>
+
+        <section class="filters-sort">
+            <select id="filterTasks" aria-label="Filter tasks">
+                <option value="all">All Tasks</option>
+                <option value="active">Active Tasks</option>
+                <option value="completed">Completed Tasks</option>
+                <option value="important">Important Tasks</option>
+            </select>
+            </section>
+
+        <ul id="taskList">
+            </ul>
+    </div>
+
+    <div id="taskDetailModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Task Details</h2>
+            <input type="text" id="modalTaskTitle" class="modal-input" placeholder="Task title">
+            <textarea id="modalTaskDescription" class="modal-textarea" placeholder="Add details or notes..."></textarea>
+            <div class="modal-actions">
+                <label for="modalDueDate">Due Date:</label>
+                <input type="date" id="modalDueDate" class="modal-input">
+                <button id="saveTaskDetails" class="modal-button primary">Save Changes</button>
+                <button id="cancelTaskDetails" class="modal-button secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
