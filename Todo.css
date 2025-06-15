@@ -1,0 +1,418 @@
+:root {
+    --primary-color: #4285f4; /* Google Blue */
+    --primary-dark: #3367d6;
+    --accent-color: #ea4335; /* Google Red */
+    --background-light: #f8f9fa;
+    --text-color: #3c4043;
+    --light-grey: #e8eaed;
+    --dark-grey: #5f6368;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-light);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    margin: 0;
+    padding: 30px 15px;
+    box-sizing: border-box;
+    color: var(--text-color);
+}
+
+.container {
+    background-color: #fff;
+    padding: 35px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    position: relative; /* For potential absolute positioned elements */
+}
+
+header h1 {
+    color: var(--primary-color);
+    margin-bottom: 30px;
+    font-size: 2.2em;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+header h1 .fas {
+    font-size: 1.1em;
+}
+
+.input-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    border-radius: var(--border-radius);
+    overflow: hidden; /* Ensures shadow applies nicely */
+}
+
+#taskInput {
+    flex-grow: 1;
+    padding: 15px;
+    border: none;
+    font-size: 1em;
+    outline: none;
+    color: var(--dark-grey);
+}
+
+#taskInput::placeholder {
+    color: var(--dark-grey);
+    opacity: 0.7;
+}
+
+#addTaskBtn {
+    padding: 15px 25px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#addTaskBtn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-1px);
+}
+#addTaskBtn:active {
+    transform: translateY(0);
+}
+
+/* Filters and Sort */
+.filters-sort {
+    display: flex;
+    justify-content: flex-end; /* Align filters to the right */
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.filters-sort select {
+    padding: 10px 15px;
+    border: 1px solid var(--light-grey);
+    border-radius: 5px;
+    font-size: 0.95em;
+    color: var(--dark-grey);
+    background-color: #fff;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.filters-sort select:focus {
+    border-color: var(--primary-color);
+}
+
+
+/* Task List */
+#taskList {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+#taskList li {
+    background-color: #fff;
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-wrap: wrap; /* Allows actions to wrap on small screens */
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.05em;
+    color: var(--text-color);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer; /* Indicates it's clickable for details */
+    animation: fadeIn 0.3s ease-out; /* Animation for new tasks */
+}
+
+#taskList li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+#taskList li .task-content {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    word-break: break-word; /* Prevents long words from overflowing */
+    padding-right: 10px; /* Space before actions */
+}
+
+#taskList li .task-text {
+    flex-grow: 1;
+    font-weight: 500;
+}
+
+#taskList li .task-due-date {
+    font-size: 0.85em;
+    color: var(--dark-grey);
+    margin-top: 5px; /* Space below task text */
+    flex-basis: 100%; /* Make due date take full width on its row */
+    text-align: left;
+}
+
+
+/* Task Status */
+#taskList li.completed {
+    text-decoration: line-through;
+    color: var(--dark-grey);
+    background-color: #e6e6e6; /* Lighter background for completed */
+    box-shadow: none;
+    opacity: 0.7;
+    transform: none; /* Remove hover effect for completed */
+    cursor: default;
+}
+#taskList li.completed .task-text {
+    color: var(--dark-grey); /* Ensure text color changes */
+}
+
+#taskList li.important {
+    border-left: 5px solid var(--accent-color); /* Red bar for important */
+    background-color: #fff6f6; /* Slightly red tint */
+}
+
+
+/* Task Actions */
+.task-actions {
+    display: flex;
+    gap: 8px;
+    margin-left: 15px; /* Space between content and actions */
+    flex-shrink: 0; /* Prevent actions from shrinking */
+}
+
+.task-actions button {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    color: var(--dark-grey);
+    width: 38px; /* Fixed width for better click area */
+    height: 38px;
+    border-radius: 50%; /* Make buttons round */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.task-actions button:hover {
+    background-color: var(--light-grey);
+    color: var(--primary-color);
+}
+
+.task-actions .complete-btn .fa-check-circle {
+    color: #28a745; /* Green */
+}
+.task-actions .complete-btn:hover .fa-check-circle {
+    color: #218838;
+}
+
+.task-actions .important-btn .fa-star {
+    color: var(--dark-grey); /* Default star color */
+}
+.task-actions .important-btn.active .fa-star {
+    color: #ffc107; /* Yellow for active important */
+}
+.task-actions .important-btn:hover .fa-star {
+    color: #e0a800;
+}
+
+.task-actions .delete-btn .fa-trash-alt {
+    color: var(--accent-color); /* Red */
+}
+.task-actions .delete-btn:hover .fa-trash-alt {
+    color: #c82333;
+}
+
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 550px;
+    position: relative;
+    animation: slideIn 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.close-button {
+    color: #aaa;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #333;
+    text-decoration: none;
+}
+
+.modal h2 {
+    margin-top: 0;
+    color: var(--primary-color);
+    font-size: 1.8em;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.modal-input,
+.modal-textarea {
+    width: calc(100% - 24px); /* Account for padding */
+    padding: 12px;
+    border: 1px solid var(--light-grey);
+    border-radius: 5px;
+    font-size: 1em;
+    color: var(--text-color);
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    resize: vertical; /* Allow textarea to be resized vertically */
+    min-height: 40px;
+}
+
+.modal-textarea {
+    min-height: 80px;
+}
+
+.modal-input:focus,
+.modal-textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2);
+}
+
+.modal-actions {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    gap: 15px;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 15px;
+}
+
+.modal-actions label {
+    margin-right: 10px;
+    color: var(--dark-grey);
+    font-weight: 500;
+}
+
+.modal-button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.modal-button.primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+.modal-button.primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.modal-button.secondary {
+    background-color: var(--light-grey);
+    color: var(--text-color);
+}
+.modal-button.secondary:hover {
+    background-color: #d1d1d1;
+    transform: translateY(-1px);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 25px;
+    }
+    header h1 {
+        font-size: 1.8em;
+    }
+    .input-section {
+        flex-direction: column;
+        gap: 15px;
+    }
+    #addTaskBtn {
+        width: 100%;
+        border-radius: var(--border-radius);
+    }
+    .filters-sort {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+    #taskList li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .task-actions {
+        width: 100%;
+        justify-content: flex-end;
+        margin-top: 10px;
+        margin-left: 0; /* Remove left margin for actions */
+    }
+    .modal-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
